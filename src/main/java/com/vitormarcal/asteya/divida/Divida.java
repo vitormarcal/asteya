@@ -3,15 +3,16 @@ package com.vitormarcal.asteya.divida;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "divida")
-@Getter @Setter @NoArgsConstructor
+@NoArgsConstructor @Getter @Setter
 public class Divida {
 
     @Id
@@ -26,4 +27,12 @@ public class Divida {
     @Size(min = 30 , max = 300)
     private String descricaoDetalhada;
 
+    @NotNull
+    private LocalDate dataInicioOcorrencia;
+
+    public Divida(String descricaoCurta, String descricaoDetalhada, LocalDate dataInicioOcorrencia) {
+        this.descricaoCurta = descricaoCurta;
+        this.descricaoDetalhada = descricaoDetalhada;
+        this.dataInicioOcorrencia = dataInicioOcorrencia;
+    }
 }
