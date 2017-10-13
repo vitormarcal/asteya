@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -20,6 +21,11 @@ public class DividaService {
     @Autowired
     public DividaService(DividaRepository dividaRepository) {
         this.dividaRepository = dividaRepository;
+    }
+
+    public List<Divida> listar() {
+        loggerUtil.info("Buscando todas as dividas");
+        return dividaRepository.findAll();
     }
 
     public Divida salvar(Divida divida) {

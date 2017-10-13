@@ -8,7 +8,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "divida")
@@ -30,10 +30,10 @@ public class Divida {
     private String descricaoDetalhada;
 
     @NotNull
-    @Column(name = "dt_ini_ocorrencia", nullable = false)
-    private LocalDate dataInicioOcorrencia;
+    @Column(name = "dt_ini_ocorrencia", nullable = false, columnDefinition = "DATE")
+    private LocalDateTime dataInicioOcorrencia;
 
-    public Divida(String descricaoCurta, String descricaoDetalhada, LocalDate dataInicioOcorrencia) {
+    public Divida(String descricaoCurta, String descricaoDetalhada, LocalDateTime dataInicioOcorrencia) {
         this.descricaoCurta = descricaoCurta;
         this.descricaoDetalhada = descricaoDetalhada;
         this.dataInicioOcorrencia = dataInicioOcorrencia;

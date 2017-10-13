@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/dividas")
@@ -16,6 +17,11 @@ public class DividaResource {
     @Autowired
     public DividaResource(DividaService dividaService) {
         this.dividaService = dividaService;
+    }
+
+    @GetMapping
+    public List<Divida> listar() {
+        return dividaService.listar();
     }
 
     @GetMapping("/{id}")
