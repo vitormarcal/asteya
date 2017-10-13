@@ -7,14 +7,19 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController("/dividas")
+@RestController
+@RequestMapping("/dividas")
 public class DividaResource {
 
+    private final DividaService dividaService;
+
     @Autowired
-    private DividaService dividaService;
+    public DividaResource(DividaService dividaService) {
+        this.dividaService = dividaService;
+    }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Divida> buscar(@PathVariable Integer idDivida) {
+    public ResponseEntity<Divida> buscar(@PathVariable Long idDivida) {
         Divida divida =  dividaService.buscar(idDivida);
         return divida != null ? ResponseEntity.ok(divida) : ResponseEntity.notFound().build();
     }
@@ -26,15 +31,15 @@ public class DividaResource {
         return ResponseEntity.status(HttpStatus.CREATED).body(dividaBanco);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Divida> atualizar(@PathVariable Integer idDivida, @RequestBody @Valid Divida divida) {
+    @PutMapping("{id}")
+    public ResponseEntity<Divida> atualizar(@PathVariable Long idDivida, @RequestBody @Valid Divida divida) {
         Divida dividaAtualizada = dividaService.atualizar(idDivida, divida);
         return ResponseEntity.ok(dividaAtualizada);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remover(@PathVariable Integer idDivida) {
+    public void remover(@PathVariable Long idDivida) {
         dividaService.remover(idDivida);
     }
 
