@@ -20,14 +20,17 @@ public class Divida {
     private Long id;
 
     @NotEmpty
-    @Size(min = 10, max = 30)
+    @Size(min = 10, max = 15)
+    @Column(name = "des_curta", nullable = false)
     private String descricaoCurta;
 
     @NotEmpty
-    @Size(min = 30 , max = 300)
+    @Size(min = 16 , max = 300)
+    @Column(name = "des_detalhada", nullable = false)
     private String descricaoDetalhada;
 
     @NotNull
+    @Column(name = "dt_ini_ocorrencia", nullable = false)
     private LocalDate dataInicioOcorrencia;
 
     public Divida(String descricaoCurta, String descricaoDetalhada, LocalDate dataInicioOcorrencia) {
