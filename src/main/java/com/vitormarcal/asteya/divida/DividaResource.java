@@ -25,7 +25,7 @@ public class DividaResource {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Divida> buscar(@PathVariable Long idDivida) {
+    public ResponseEntity<Divida> buscar(@PathVariable("id") Long idDivida) {
         Divida divida =  dividaService.buscar(idDivida);
         return divida != null ? ResponseEntity.ok(divida) : ResponseEntity.notFound().build();
     }
@@ -38,14 +38,14 @@ public class DividaResource {
     }
 
     @PutMapping("{id}")
-    public ResponseEntity<Divida> atualizar(@PathVariable Long idDivida, @RequestBody @Valid Divida divida) {
+    public ResponseEntity<Divida> atualizar(@PathVariable("id") Long idDivida, @RequestBody @Valid Divida divida) {
         Divida dividaAtualizada = dividaService.atualizar(idDivida, divida);
         return ResponseEntity.ok(dividaAtualizada);
     }
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void remover(@PathVariable Long idDivida) {
+    public void remover(@PathVariable("id") Long idDivida) {
         dividaService.remover(idDivida);
     }
 
