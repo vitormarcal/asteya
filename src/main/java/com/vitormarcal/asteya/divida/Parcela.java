@@ -25,9 +25,4 @@ public class Parcela {
 
     private Boolean pago;
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "id_divida")
-    private Divida divida;
-
 }

@@ -9,6 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "divida")
@@ -33,9 +34,15 @@ public class Divida {
     @Column(name = "dt_ini_ocorrencia", nullable = false, columnDefinition = "DATE")
     private LocalDateTime dataInicioOcorrencia;
 
-    public Divida(String descricaoCurta, String descricaoDetalhada, LocalDateTime dataInicioOcorrencia) {
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_divida")
+    private Set<Parcela> parcelas;
+
+    public Divida(String descricaoCurta, String descricaoDetalhada,
+                  LocalDateTime dataInicioOcorrencia, Set<Parcela> parcelas) {
         this.descricaoCurta = descricaoCurta;
         this.descricaoDetalhada = descricaoDetalhada;
         this.dataInicioOcorrencia = dataInicioOcorrencia;
+        this.parcelas = parcelas;
     }
 }
