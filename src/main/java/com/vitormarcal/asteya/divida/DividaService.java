@@ -23,27 +23,27 @@ public class DividaService {
         this.dividaRepository = dividaRepository;
     }
 
-    public List<Divida> listar() {
+    List<Divida> listar() {
         loggerUtil.info("Buscando todas as dividas");
         return dividaRepository.findAll();
     }
 
-    public Divida salvar(Divida divida) {
+    Divida salvar(Divida divida) {
         loggerUtil.info("Salvando divida");
         return dividaRepository.save(divida);
     }
 
-    public Divida buscar(Long idDivida) {
+    Divida buscar(Long idDivida) {
         return buscarPorCodigo(idDivida);
     }
 
-    public void remover(Long idDivida) {
+    void remover(Long idDivida) {
         loggerUtil.info("Excluindo divida de acordo com id");
         dividaRepository.delete(idDivida);
         loggerUtil.info("Excluído divida com sucesso");
     }
 
-    public Divida atualizar(Long idDivida, Divida divida) {
+    Divida atualizar(Long idDivida, Divida divida) {
         Divida dividaBanco = buscarPorCodigo(idDivida);
         BeanUtils.copyProperties(divida, dividaBanco, "id");
         return dividaRepository.save(dividaBanco);

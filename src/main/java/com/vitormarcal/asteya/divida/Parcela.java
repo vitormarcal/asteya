@@ -26,6 +26,7 @@ public class Parcela {
 
     private Boolean pago;
 
+    @SuppressWarnings("unused")
     public Parcela(BigDecimal valor, Integer recorrencia, Boolean pago) {
         this.valor = valor;
         this.recorrencia = recorrencia;

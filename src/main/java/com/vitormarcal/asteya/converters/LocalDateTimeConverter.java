@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
+@SuppressWarnings("unused")
 @Converter(autoApply = true)
 /**
  * Converte LocalDateTime da Entity para um TimeStamp e vice-versa.

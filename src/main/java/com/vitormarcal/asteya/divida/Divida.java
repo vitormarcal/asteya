@@ -40,6 +40,7 @@ public class Divida {
     @JoinColumn(name = "id_divida")
     private Set<Parcela> parcelas;
 
+    @SuppressWarnings("unused")
     public Divida(String descricaoCurta, String descricaoDetalhada,
                   LocalDateTime dataInicioOcorrencia, Set<Parcela> parcelas) {
         this.descricaoCurta = descricaoCurta;
