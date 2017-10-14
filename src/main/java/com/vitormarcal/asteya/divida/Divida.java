@@ -3,6 +3,7 @@ package com.vitormarcal.asteya.divida;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
@@ -13,7 +14,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "divida")
-@NoArgsConstructor @Getter @Setter
+@NoArgsConstructor @Getter @Setter @ToString
 public class Divida {
 
     @Id
@@ -34,7 +35,8 @@ public class Divida {
     @Column(name = "dt_ini_ocorrencia", nullable = false, columnDefinition = "DATE")
     private LocalDateTime dataInicioOcorrencia;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @NotNull
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "id_divida")
     private Set<Parcela> parcelas;
 

@@ -3,7 +3,7 @@ CREATE TABLE parcela (
   valor DECIMAL(10,2) NOT NULL,
   recorrencia BIGINT(20) NOT NULL,
   pago TINYINT(1) DEFAULT 0,
-  id_divida BIGINT(20) NOT NULL,
+  id_divida BIGINT(20) NULL,
   FOREIGN KEY (id_divida) REFERENCES divida(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
