@@ -1,5 +1,6 @@
 package com.vitormarcal.asteya.exceptionhandlers;
 
+import lombok.ToString;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,9 +20,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @ControllerAdvice
 public class AsteyaExceptionHandler extends ResponseEntityExceptionHandler {
@@ -49,6 +53,7 @@ public class AsteyaExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         List<Erro> erros = criarListaDeErros(ex.getBindingResult());
+        loggerUtil.error(erros.toString(), ex);
         return super.handleExceptionInternal(ex, erros, headers, HttpStatus.BAD_REQUEST, request);
     }
 
@@ -72,6 +77,23 @@ public class AsteyaExceptionHandler extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(ex, erros, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
+        List<Erro> errors = criarListaDeErros(ex);
+
+        return super.handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    private List<Erro> criarListaDeErros(ConstraintViolationException ex) {
+        List<Erro> errors = new ArrayList<>();
+        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+            String mensagemUsuario = violation.getPropertyPath() + ": " + violation.getMessage();
+            String mensagemDesenvolvedor = violation.getRootBeanClass().getName() + ": " + mensagemUsuario;
+            errors.add(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+        }
+        return errors;
+    }
+
     private List<Erro> criarListaDeErros(BindingResult bindingResult) {
         List<Erro> erros = new ArrayList<>();
 
@@ -83,6 +105,7 @@ public class AsteyaExceptionHandler extends ResponseEntityExceptionHandler {
         return erros;
     }
 
+    @ToString
     public static class Erro {
         private String mensagemUsuario;
         private String mensagemDesenvolvedor;
