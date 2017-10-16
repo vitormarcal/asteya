@@ -1,9 +1,6 @@
 package com.vitormarcal.asteya.divida;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -11,7 +8,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "parcela")
-@NoArgsConstructor @Getter @Setter @ToString
+@NoArgsConstructor @Getter @Setter @EqualsAndHashCode(of = "id") @ToString
 public class Parcela {
 
     @Id
