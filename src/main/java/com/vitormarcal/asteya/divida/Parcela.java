@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "parcela")
-@NoArgsConstructor @Getter @Setter @EqualsAndHashCode(of = "id") @ToString
+@NoArgsConstructor @Getter @Setter @EqualsAndHashCode @ToString
 public class Parcela {
 
     @Id
