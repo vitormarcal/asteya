@@ -24,12 +24,12 @@ public class DividaService {
     }
 
     List<Divida> listar() {
-        loggerUtil.info("Buscando todas as dividas");
+        loggerUtil.info("Buscando todas as dívidas");
         return dividaRepository.findAll();
     }
 
     Divida salvar(Divida divida) {
-        loggerUtil.info("Salvando divida");
+        loggerUtil.info("Salvando dívida");
         return dividaRepository.save(divida);
     }
 
@@ -38,25 +38,26 @@ public class DividaService {
     }
 
     void remover(Long idDivida) {
-        loggerUtil.info("Excluindo divida de acordo com id");
+        loggerUtil.info("Excluindo dívida de acordo com id");
         dividaRepository.delete(idDivida);
-        loggerUtil.info("Excluído divida com sucesso");
+        loggerUtil.info("Excluído dívida com sucesso");
     }
 
     Divida atualizar(Long idDivida, Divida divida) {
         Divida dividaBanco = buscarPorCodigo(idDivida);
+        loggerUtil.info("Atualizando dívida existente");
         BeanUtils.copyProperties(divida, dividaBanco, "id");
         return dividaRepository.save(dividaBanco);
 
     }
 
     private Divida buscarPorCodigo(Long idDivida) {
-        loggerUtil.info("Buscando divida de acordo com id");
+        loggerUtil.info("Buscando dívida de acordo com id");
         Optional<Divida> dividaBanco = dividaRepository.findById(idDivida);
         if (dividaBanco.isPresent()) {
             return dividaBanco.get();
         } else {
-            loggerUtil.info("Divida não encontrada");
+            loggerUtil.info("Dívida não encontrada");
             throw new EmptyResultDataAccessException(1);
         }
     }
