@@ -1,12 +1,15 @@
 package com.vitormarcal.asteya.divida;
 
+import com.vitormarcal.asteya.events.RecursoCriadoEvent;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -16,10 +19,12 @@ import java.util.List;
 public class DividaResource {
 
     private final DividaService dividaService;
+    private final ApplicationEventPublisher publisher;
 
     @Autowired
-    public DividaResource(DividaService dividaService) {
+    public DividaResource(DividaService dividaService, ApplicationEventPublisher publisher) {
         this.dividaService = dividaService;
+        this.publisher = publisher;
     }
 
     @GetMapping
@@ -38,8 +43,9 @@ public class DividaResource {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @ApiOperation(value = "Guarda uma dívida", response = Divida.class)
-    public ResponseEntity<Divida> salvar(@RequestBody @Valid Divida divida) {
+    public ResponseEntity<Divida> salvar(@RequestBody @Valid Divida divida, HttpServletResponse response) {
         Divida dividaBanco = dividaService.salvar(divida);
+        publicaLocalizacaoRecurso(dividaBanco.getId(), response);
         return ResponseEntity.status(HttpStatus.CREATED).body(dividaBanco);
     }
 
@@ -55,6 +61,16 @@ public class DividaResource {
     @ApiOperation(value = "Remove uma dívida")
     public void remover(@PathVariable("id") Long idDivida) {
         dividaService.remover(idDivida);
+    }
+
+    /**
+     * Aciona evento que escreve no header do response o Location (localização) do recurso criado.
+     * @param id codigo identificador do recurso no banco de dados
+     * @param response response da requisição que será adicionado o Location
+     * @see RecursoCriadoEvent
+     */
+    private void publicaLocalizacaoRecurso(Long id, HttpServletResponse response) {
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, id));
     }
 
 }
