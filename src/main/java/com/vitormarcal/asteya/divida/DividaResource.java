@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/dividas")
-@Api(value = "dividas", description = "Operações permitidas para manter dividas")
+@Api(value = "dividas", tags = {"Manter dividas"})
 public class DividaResource {
 
     private final DividaService dividaService;
