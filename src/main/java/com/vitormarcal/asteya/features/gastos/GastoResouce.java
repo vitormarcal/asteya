@@ -53,7 +53,7 @@ public class GastoResouce implements BaseResource<Gasto> {
 
     @Override
     @ApiOperation(value = "Atualiza um gasto", response = Gasto.class)
-    public ResponseEntity<Gasto> atualizar(@PathVariable("id") Long idGasto, Gasto gasto) {
+    public ResponseEntity<Gasto> atualizar(@PathVariable("id") Long idGasto, @RequestBody @Valid  Gasto gasto) {
         Gasto gastoAtualizado = gastoService.atualizar(idGasto, gasto);
         return ResponseEntity.ok(gastoAtualizado);
     }

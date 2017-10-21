@@ -88,7 +88,7 @@ public class AsteyaExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler({TransactionSystemException.class})
     public ResponseEntity<Object> handleTransactionSystemException(TransactionSystemException ex, WebRequest request) {
         String mensagemUsuario = messageSource.getMessage("erro.inesperado.database", null, LocaleContextHolder.getLocale());
-        loggerUtil.error(mensagemUsuario);
+        loggerUtil.error(mensagemUsuario, ex);
         List<Erro> errors;
         if (ex.getMostSpecificCause() instanceof ConstraintViolationException) {
             errors = criarListaDeErros(((ConstraintViolationException) ex.getMostSpecificCause()).getConstraintViolations());
@@ -105,6 +105,7 @@ public class AsteyaExceptionHandler extends ResponseEntityExceptionHandler {
             String mensagemUsuario = violation.getPropertyPath() + ": " + violation.getMessage();
             String mensagemDesenvolvedor = violation.getRootBeanClass().getName() + ": " + mensagemUsuario;
             errors.add(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+            violation.getMessageTemplate();
         }
         return errors;
     }
