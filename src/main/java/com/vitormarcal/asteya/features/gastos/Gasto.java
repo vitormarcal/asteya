@@ -1,5 +1,6 @@
 package com.vitormarcal.asteya.features.gastos;
 
+import com.vitormarcal.asteya.features.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -15,13 +16,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode(of = "id") @ToString
-public class Gasto {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(notes = "O identificador do Gasto gerado pelo database")
-    private Long id;
+@ToString(callSuper = true)
+@EqualsAndHashCode
+public class Gasto extends BaseEntity {
 
     @NotEmpty
     @Size(min = 16 , max = 50)
@@ -38,5 +35,11 @@ public class Gasto {
     @ApiModelProperty(notes = "A data em que o gasto foo feito")
     private LocalDateTime dataOcorrencia;
 
-
+    @SuppressWarnings("unused")
+    public Gasto(Long id, String descricao, BigDecimal valor, LocalDateTime dataOcorrencia) {
+        super.id = id;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.dataOcorrencia = dataOcorrencia;
+    }
 }
