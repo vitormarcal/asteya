@@ -1,5 +1,7 @@
 package com.vitormarcal.asteya.features.dividas;
 
+import com.vitormarcal.asteya.features.BaseService;
+import com.vitormarcal.asteya.features.gastos.Gasto;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -12,7 +14,7 @@ import java.util.Optional;
 
 
 @Service
-public class DividaService {
+public class DividaService implements BaseService<Divida> {
 
     private static final Logger loggerUtil = LoggerFactory.getLogger(DividaService.class);
 
@@ -23,27 +25,32 @@ public class DividaService {
         this.dividaRepository = dividaRepository;
     }
 
-    List<Divida> listar() {
+    @Override
+    public List<Divida> listar() {
         loggerUtil.info("Buscando todas as dívidas");
         return dividaRepository.findAll();
     }
 
-    Divida salvar(Divida divida) {
+    @Override
+    public Divida salvar(Divida divida) {
         loggerUtil.info("Salvando dívida");
         return dividaRepository.save(divida);
     }
 
-    Divida buscar(Long idDivida) {
+    @Override
+    public Divida buscar(Long idDivida) {
         return buscarPorCodigo(idDivida);
     }
 
-    void remover(Long idDivida) {
+    @Override
+    public void remover(Long idDivida) {
         loggerUtil.info("Excluindo dívida de acordo com id");
         dividaRepository.delete(idDivida);
         loggerUtil.info("Excluído dívida com sucesso");
     }
 
-    Divida atualizar(Long idDivida, Divida divida) {
+    @Override
+    public Divida atualizar(Long idDivida, Divida divida) {
         Divida dividaBanco = buscarPorCodigo(idDivida);
         loggerUtil.info("Atualizando dívida existente");
         BeanUtils.copyProperties(divida, dividaBanco, "id");
