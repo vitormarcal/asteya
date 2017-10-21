@@ -1,4 +1,4 @@
-package com.vitormarcal.asteya.gastos;
+package com.vitormarcal.asteya.features.gastos;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
