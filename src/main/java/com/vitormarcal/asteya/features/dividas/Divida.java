@@ -1,5 +1,6 @@
 package com.vitormarcal.asteya.features.dividas;
 
+import com.vitormarcal.asteya.features.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -12,13 +13,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "divida")
-@NoArgsConstructor @Getter @Setter @EqualsAndHashCode(of = "id") @ToString
-public class Divida {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @ApiModelProperty(notes = "O identificador da Dívida gerado pelo database")
-    private Long id;
+@NoArgsConstructor @Getter @Setter @EqualsAndHashCode(callSuper = true) @ToString
+public class Divida extends BaseEntity {
 
     @NotEmpty
     @Size(min = 10, max = 15)

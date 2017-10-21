@@ -14,10 +14,8 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "gasto")
 @NoArgsConstructor
-@Getter
-@Setter
-@ToString(callSuper = true)
-@EqualsAndHashCode
+@Getter @Setter
+@EqualsAndHashCode @ToString(callSuper = true)
 public class Gasto extends BaseEntity {
 
     @NotEmpty
@@ -43,3 +41,5 @@ public class Gasto extends BaseEntity {
         this.dataOcorrencia = dataOcorrencia;
     }
 }
+
+
