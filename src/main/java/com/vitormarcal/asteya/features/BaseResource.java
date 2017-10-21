@@ -1,5 +1,7 @@
 package com.vitormarcal.asteya.features;
 
+import com.vitormarcal.asteya.events.RecursoCriadoEvent;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,6 +27,17 @@ public interface BaseResource<T> {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     void remover(Long id);
+
+    /**
+     * Aciona evento que escreve no header do response o Location (localização) do recurso criado.
+     * @param id codigo identificador do recurso no banco de dados
+     * @param response response da requisição que será adicionado o Location
+     * @param publisher
+     * @see RecursoCriadoEvent
+     */
+    default void publicaLocalizacaoRecurso(Long id, HttpServletResponse response, ApplicationEventPublisher publisher) {
+        publisher.publishEvent(new RecursoCriadoEvent(this, response, id));
+    }
 
 
 }

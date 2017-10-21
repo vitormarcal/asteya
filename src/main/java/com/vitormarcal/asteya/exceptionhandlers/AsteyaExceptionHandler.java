@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -79,14 +80,27 @@ public class AsteyaExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request) {
-        List<Erro> errors = criarListaDeErros(ex);
+        List<Erro> errors = criarListaDeErros(ex.getConstraintViolations());
 
         return super.handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 
-    private List<Erro> criarListaDeErros(ConstraintViolationException ex) {
+    @ExceptionHandler({TransactionSystemException.class})
+    public ResponseEntity<Object> handleTransactionSystemException(TransactionSystemException ex, WebRequest request) {
+        List<Erro> errors;
+        if (ex.getMostSpecificCause() instanceof ConstraintViolationException) {
+            errors = criarListaDeErros(((ConstraintViolationException) ex.getMostSpecificCause()).getConstraintViolations());
+            return super.handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+        }
+        String mensagemUsuario = messageSource.getMessage("erro.inesperado.database", null, LocaleContextHolder.getLocale());
+        String mensagemDesenvolvedor = ExceptionUtils.getRootCauseMessage(ex);
+        errors = Collections.singletonList(new Erro(mensagemUsuario, mensagemDesenvolvedor));
+        return super.handleExceptionInternal(ex, errors, new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
+    }
+
+    private List<Erro> criarListaDeErros(Set<ConstraintViolation<?>> constraintViolations) {
         List<Erro> errors = new ArrayList<>();
-        for (ConstraintViolation<?> violation : ex.getConstraintViolations()) {
+        for (ConstraintViolation<?> violation : constraintViolations) {
             String mensagemUsuario = violation.getPropertyPath() + ": " + violation.getMessage();
             String mensagemDesenvolvedor = violation.getRootBeanClass().getName() + ": " + mensagemUsuario;
             errors.add(new Erro(mensagemUsuario, mensagemDesenvolvedor));

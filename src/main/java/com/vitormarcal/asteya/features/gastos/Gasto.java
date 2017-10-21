@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 public class Gasto extends BaseEntity {
 
     @NotEmpty
-    @Size(min = 16 , max = 50)
+    @Size(min = 10 , max = 50)
     @Column(name = "des_curta", nullable = false)
     @ApiModelProperty(notes = "Uma descrição curta do gasto", required = true)
     private String descricao;
