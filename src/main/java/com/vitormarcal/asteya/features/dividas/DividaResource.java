@@ -1,4 +1,4 @@
-package com.vitormarcal.asteya.divida;
+package com.vitormarcal.asteya.features.dividas;
 
 import com.vitormarcal.asteya.events.RecursoCriadoEvent;
 import io.swagger.annotations.Api;

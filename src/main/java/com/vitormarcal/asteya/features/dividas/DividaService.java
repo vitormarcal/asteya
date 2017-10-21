@@ -1,4 +1,4 @@
-package com.vitormarcal.asteya.divida;
+package com.vitormarcal.asteya.features.dividas;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

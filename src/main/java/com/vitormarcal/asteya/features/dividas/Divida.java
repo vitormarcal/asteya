@@ -1,4 +1,4 @@
-package com.vitormarcal.asteya.divida;
+package com.vitormarcal.asteya.features.dividas;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
