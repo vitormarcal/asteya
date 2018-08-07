@@ -1,6 +1,8 @@
 package com.vitormarcal.asteya.features.gastos;
 
 import com.vitormarcal.asteya.features.BaseService;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -12,20 +14,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
+@Log4j2
 public class GastoService implements BaseService<Gasto> {
-
-    private static final Logger loggerUtil = LoggerFactory.getLogger(GastoService.class);
 
     private final GastoRespository gastoRespository;
 
-    @Autowired
-    public GastoService(GastoRespository gastoRespository) {
-        this.gastoRespository = gastoRespository;
-    }
-
     @Override
     public List<Gasto> listar() {
-        loggerUtil.info("Buscando todos os gastos");
+        log.info("Buscando todos os gastos");
         return gastoRespository.findAll();
     }
 
@@ -37,32 +34,32 @@ public class GastoService implements BaseService<Gasto> {
 
     @Override
     public void remover(Long id) {
-        loggerUtil.info("Excluindo gasto de acordo com id");
+        log.info("Excluindo gasto de acordo com id");
         gastoRespository.deleteById(id);
-        loggerUtil.info("Excluído gasto com sucesso");
+        log.info("Excluído gasto com sucesso");
     }
 
     @Override
     public Gasto atualizar(Long idGasto, Gasto gasto) {
         Gasto gastobanco = buscarPorCodigo(idGasto);
-        loggerUtil.info("Atualizando gasto existente");
+        log.info("Atualizando gasto existente");
         BeanUtils.copyProperties(gasto, gastobanco, "id");
         return gastoRespository.save(gastobanco);
     }
 
     @Override
     public Gasto salvar(Gasto gasto) {
-        loggerUtil.info("Salvando gasto");
+        log.info("Salvando gasto");
         return gastoRespository.save(gasto);
     }
 
     private Gasto buscarPorCodigo(Long idGasto) {
-        loggerUtil.info("Buscando gasto de acordo com id");
+        log.info("Buscando gasto de acordo com id");
         Optional<Gasto> gastoBanco = gastoRespository.findById(idGasto);
         if (gastoBanco.isPresent()) {
             return gastoBanco.get();
         } else {
-            loggerUtil.info("Gasto não encontrado");
+            log.info("Gasto não encontrado");
             throw new EmptyResultDataAccessException(1);
         }
     }
