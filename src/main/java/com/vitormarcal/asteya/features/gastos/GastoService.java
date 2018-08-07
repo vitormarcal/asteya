@@ -38,7 +38,7 @@ public class GastoService implements BaseService<Gasto> {
     @Override
     public void remover(Long id) {
         loggerUtil.info("Excluindo gasto de acordo com id");
-        gastoRespository.delete(id);
+        gastoRespository.deleteById(id);
         loggerUtil.info("Excluído gasto com sucesso");
     }
 

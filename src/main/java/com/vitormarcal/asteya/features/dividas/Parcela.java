@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "parcela")
-@NoArgsConstructor @Getter @Setter @EqualsAndHashCode @ToString
+@Data @EqualsAndHashCode @ToString
 public class Parcela {
 
     @Id

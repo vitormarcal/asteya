@@ -3,9 +3,9 @@ package com.vitormarcal.asteya.features.dividas;
 import com.vitormarcal.asteya.features.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "divida")
-@NoArgsConstructor @Getter @Setter @EqualsAndHashCode(callSuper = true) @ToString
+@Data @EqualsAndHashCode(callSuper = true)
 public class Divida extends BaseEntity {
 
     @NotEmpty

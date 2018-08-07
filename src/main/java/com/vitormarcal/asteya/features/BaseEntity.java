@@ -6,10 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 
 @MappedSuperclass
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of = "id") @ToString
+@Data
+@EqualsAndHashCode(of = "id")
 public abstract class BaseEntity {
 
     @Id

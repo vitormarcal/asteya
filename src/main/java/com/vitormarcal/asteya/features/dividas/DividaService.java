@@ -45,7 +45,7 @@ public class DividaService implements BaseService<Divida> {
     @Override
     public void remover(Long idDivida) {
         loggerUtil.info("Excluindo dívida de acordo com id");
-        dividaRepository.delete(idDivida);
+        dividaRepository.deleteById(idDivida);
         loggerUtil.info("Excluído dívida com sucesso");
     }
 
