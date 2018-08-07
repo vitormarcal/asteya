@@ -3,7 +3,7 @@ package com.vitormarcal.asteya.features.gastos;
 import com.vitormarcal.asteya.features.BaseEntity;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.ToString;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "gasto")
-@Data @ToString(callSuper = true)
+@Data @EqualsAndHashCode(callSuper = false)
 public class Gasto extends BaseEntity {
 
     @NotEmpty
@@ -34,12 +34,18 @@ public class Gasto extends BaseEntity {
     @ApiModelProperty(notes = "A data em que o gasto foo feito")
     private LocalDateTime dataOcorrencia;
 
+    @NotNull
+    @Column(name = "num_parcelas", nullable = false)
+    @ApiModelProperty(notes = "O número de parcelas do gasto")
+    private Integer numeroParcelas;
+
     @SuppressWarnings("unused")
-    public Gasto(Long id, String descricao, BigDecimal valor, LocalDateTime dataOcorrencia) {
+    public Gasto(Long id, String descricao, BigDecimal valor, LocalDateTime dataOcorrencia, Integer numeroParcelas) {
         super.id = id;
         this.descricao = descricao;
         this.valor = valor;
         this.dataOcorrencia = dataOcorrencia;
+        this.numeroParcelas = numeroParcelas;
     }
 }
 
