@@ -1,4 +1,4 @@
-package com.vitormarcal.asteya;
+package br.com.vitormarcal.asteya;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

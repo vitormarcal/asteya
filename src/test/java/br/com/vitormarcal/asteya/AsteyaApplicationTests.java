@@ -1,4 +1,4 @@
-package com.vitormarcal.asteya;
+package br.com.vitormarcal.asteya;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
